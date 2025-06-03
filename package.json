@@ -1,0 +1,23 @@
+{
+    "name": "easymoney",
+    "description": "e-Commerce platform with IoT elements",
+    "version": "0.0.1",
+    "main": "src/index.ts",
+    "author": "keywords: e-Commerce IoT",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/ponyatov/EasyMoney.git"
+    },
+    "directories": {
+        "doc": "doc",
+        "lib": "lib"
+    },
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "bugs": {
+        "url": "https://github.com/ponyatov/EasyMoney/issues"
+    },
+    "homepage": "https://github.com/ponyatov/EasyMoney#readme"
+}
