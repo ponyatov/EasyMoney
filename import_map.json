@@ -1,0 +1,6 @@
+{
+    "imports": {
+        "hono": "https://deno.land/x/hono@v3.7.2/mod.ts",
+        "sqlite": "https://deno.land/x/sqlite3@0.8.0/mod.ts"
+    }
+}
