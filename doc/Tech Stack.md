@@ -1,12 +1,16 @@
 # Tech Stack
 
+- Limit: use only OpenSource and Free License techs & libraries
+- Prefer: most easy to learn and simple to run components
+- Hosting: both VPS/VPS and hardware hosting on x86_64 and Raspberry Pi devices
+
 ## **1. Core Languages**
 
 |**Component**|**Technology**|**Rationale**|
 |---|---|---|
 |**Primary Application Code**|TypeScript|Rapid development, full-stack consistency|
-|**Performance Modules**|Rust|Memory safety, hardware access|
-|**IoT & Hardware**|Rust|zero size runtime|
+|**Performance Modules**|Rust|Memory-safe zero-cost abstractions for financial math/hardware (no GC pauses)|
+|**IoT/Hardware**|Rust ([[no_std]])|Zero-runtime footprint for bare-metal systems (ARM Cortex-M, RISC-V)|
 
 ## **2. Frontend**
 
