@@ -14,4 +14,6 @@
 		- mobile and warehouse terminals for delivery services
 	- industrial
 		- production monitoring & ticketing
-- small retail automation
+- Agricultural Automation
+	- simple weather sensor networks (temperature/moisture)
+	- agricultural machinery monitoring
