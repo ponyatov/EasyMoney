@@ -11,3 +11,4 @@ github: https://github.com/ponyatov/EasyMoney
 ## [[E-Commerce Features]]
 ## [[IoT Features]]
 ## [[Core Components]]
+## [[Tech Stack]]
