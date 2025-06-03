@@ -12,27 +12,7 @@
 |**Performance Modules**|Rust|Memory-safe zero-cost abstractions for financial math/hardware (no GC pauses)|
 |**IoT/Hardware**|Rust ([[no_std]])|Zero-runtime footprint for bare-metal systems (ARM Cortex-M, RISC-V)|
 
-## **2. Frontend**
-
-## **3. Backend**
-
-## **4. Mobile**
-
-## **5. Databases**
-
-## **6. IoT/Embedded**
-
-## **7. Security**
-
-## **8. DevOps**
-
-## **Critical Integration Points**
-
-1. **TypeScript ↔ Rust**
-    - Node.js: [[napi-rs]] for native modules
-    - Browser: WebAssembly ([[wasm-pack]])
-
-## **Why This Stack?**
+##### Why This Stack?
 
 - **TypeScript**:
     - Unified language for business logic
@@ -42,3 +22,23 @@
     - Fearless concurrency for transaction processing
     - WASM support for browser-based client-side computations
     - Zero-cost abstractions for embedded devices
+
+##### Critical Integration Points
+
+1. **TypeScript ↔ Rust**
+    - Node.js: [[napi-rs]] for native modules
+    - Browser: WebAssembly ([[wasm-pack]])
+
+## **2. Backend**
+
+## **3. Frontend**
+
+## **4. Databases**
+
+## **5. Mobile**
+
+## **6. Security**
+
+## **7. DevOps**
+
+## **8. IoT/Embedded**
