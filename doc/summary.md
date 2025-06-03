@@ -8,4 +8,5 @@
 		- speed-critical and hardware-specific components: Rust
 	- [E-Commerce Features](https://gitflic.ru/project/dponyatov/easymoney/blob?file=doc%2FE-Commerce%20Features.md&branch=dponyatov&mode=markdown)
 	- [IoT/Embedded Features](https://gitflic.ru/project/dponyatov/easymoney/blob?file=doc%2FIoT%20Features.md&branch=dponyatov&mode=markdown)
-3. [Core Components]()
+3. [Core Components](https://gitflic.ru/project/dponyatov/easymoney/blob?file=doc%2FCore%20Components.md&branch=dponyatov&mode=markdown)
+
