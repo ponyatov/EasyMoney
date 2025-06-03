@@ -18,6 +18,7 @@ For an e-commerce platform targeting individuals and home businesses, these crit
 - Simple product listings (images, descriptions, pricing)
 - Categories & tags for organization
 - Inventory tracking (stock levels, alerts)
+- Social networks & Messengers integration (automated posting/messaging)
 
 ✅ **Shopping Cart & Checkout**
 
