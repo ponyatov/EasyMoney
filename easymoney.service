@@ -1,0 +1,12 @@
+[Unit]
+Description=EasyMoney: e-Commerce platform with IoT elements
+
+[Service]
+ExecStart=/home/%i//npm/bin/deno run --allow-net --allow-write /home/%i/m/src/api.ts
+WorkingDirectory=/home/%i/m
+Restart=always
+User=%i
+Group=%i
+
+[Install]
+WantedBy=multi-user.target

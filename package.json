@@ -3,7 +3,7 @@
     "description": "e-Commerce platform with IoT elements",
     "version": "0.0.1",
     "main": "src/index.ts",
-    "author": "keywords: e-Commerce IoT",
+    "author": "Dmitry Ponyatov <dponyatov@gmail.com>",
     "license": "MIT",
     "repository": {
         "type": "git",
@@ -19,5 +19,5 @@
     "bugs": {
         "url": "https://github.com/ponyatov/EasyMoney/issues"
     },
-    "homepage": "https://github.com/ponyatov/EasyMoney#readme"
+    "homepage": "https://gitflic.ru/project/dponyatov/easymoney/file?file=doc&branch=dponyatov"
 }

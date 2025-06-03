@@ -1,0 +1,9 @@
+[package]
+name        =  "easymoney"
+description =  "e-Commerce platform with IoT elements"
+version     =  "0.0.1"
+authors     = ["Dmitry Ponyatov <dponyatov@gmail.com>"]
+license     =  "MIT"
+edition     =  "2024"
+
+[dependencies]
