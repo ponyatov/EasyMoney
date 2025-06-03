@@ -32,6 +32,15 @@ For an e-commerce platform targeting individuals and home businesses, these crit
 - Status tracking (processing, shipped, delivered)
 - Basic returns/refunds handling
 
+📅 **Booking & Scheduling**
+
+- Calendar integration (Google Calendar, Calendly-style booking)
+- Automated reminders (SMS/email/messengers) for staff and clients
+
+📂 **Client Portal & Support**
+
+- File sharing (contracts, invoices)
+- Messaging system (for support/questions)
 
 ## **2. Payment & Security**
 
@@ -67,7 +76,6 @@ For an e-commerce platform targeting individuals and home businesses, these crit
 - Discount codes & coupons
 - Email notifications (abandoned cart reminders)
 - Simple SEO optimization (product page metadata)
-    
 
 📊 **Analytics & Reporting**
 
