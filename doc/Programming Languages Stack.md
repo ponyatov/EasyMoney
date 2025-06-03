@@ -37,7 +37,7 @@
     - [[embedded-hal]] crate standardizes hardware access.
     - Example: Parsing [[proto/MODBUS/Modbus|Modbus]] frames with [[nom]] (pattern-matched parsers).
 
-### **B. [[TypeScript]] for [[Gateway]]s**
+### **B. [[TypeScript]] for [[Gateway]]s and Backend**
 
 - **Why [[TypeScript]]?**
     - [[React Native]] builds cross-platform mobile apps for device control.
@@ -47,3 +47,44 @@
 ```
 [Rust on ESP32] → MQTT → [Rust API] → gRPC → [TypeScript Dashboard]
 ```
+
+## **3. Comparative Advantages Over Alternatives**
+
+|**Language Pair**|**Pros**|**Cons for Market**|
+|---|---|---|
+|Rust + [[Elixir]]|Fault tolerance, pattern matching|Fewer Elixir jobs (outside telecom)|
+|Rust + Python|Easy ML integration|Python’s GIL hurts [[IoT]] performance|
+|Rust + [[Go]]|Simple concurrency|No pattern matching|
+
+**Key Insight:**  
+- [[TypeScript]]’s ubiquity in web dev offsets Rust’s learning curve, 
+- while [[Rust/Rust|Rust]] handles the heavy lifting where performance and cross-platform matters.
+
+### **4. Cost-Efficiency**
+
+- **Development Speed:**
+    - [[TypeScript]] frontends build **3x faster** than Rust
+	    - (e.g., [Tauri](https://tauri.app/) still needs TS for UI).
+    - Rust’s [[WASM/WASM|WASM]] toolchain is best
+        
+- **Hardware Savings:**
+    - [[Rust/Rust|Rust]]’s efficiency reduces IoT device costs (cheaper [[em/MCU|MCU]]s viable).
+
+### **5. Talent Availability**
+
+- **TypeScript:**
+    - 1000+ mid-level TS devs on [HeadHunter Russia](https://hh.ru/).
+        
+- **Rust:**
+    - Smaller pool but **10% higher salaries** than Java/Python roles.
+
+**Hiring Strategy:**
+
+- Outsource TS frontends locally.
+- Hire Rust specialists remotely (e.g., from Russia/Belarus/Kazakhstan).
+
+## **Conclusion**
+
+✅ **Performance** ([[Rust/Rust|Rust]] for [[IoT/IoT|IoT]]/algorithms)  
+✅ **Velocity** ([[TypeScript]] for UI/business logic)  
+✅ **Market Fit** (aligned with local tech trends)

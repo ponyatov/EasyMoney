@@ -5,4 +5,8 @@
 
 github: https://github.com/ponyatov/EasyMoney
 
+![[m/summary]]
+
 ## [[Programming Languages Stack]]
+## [[E-Commerce Features]]
+## [[IoT Features]]
