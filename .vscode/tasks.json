@@ -39,6 +39,14 @@
             "type"           : "shell",
             "command"        : "tsc src/${workspaceFolderBasename}.ts",
             "problemMatcher" : [],
+            "group"          : {"kind": "build", "isDefault": false },
+            "presentation"   : {"showReuseMessage": true, "focus": false, "reveal": "silent", "close": false}
+        },
+        {
+            "label"          : "deno: run",
+            "type"           : "shell",
+            "command"        : "deno run --allow-net --allow-write src/api.ts",
+            "problemMatcher" : [],
             "group"          : {"kind": "build", "isDefault": true },
             "presentation"   : {"showReuseMessage": true, "focus": false, "reveal": "silent", "close": false}
         }

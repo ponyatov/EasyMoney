@@ -1,6 +1,6 @@
-import { Database } from 'sqlite';
+import { DB } from 'https://deno.land/x/sqlite@v3.8/mod.ts';
 
-export const db = new Database('easymoney.db');
+export const db = new DB('tmp/easymoney.db');
 
 // Initialize schema
 db.exec(`
