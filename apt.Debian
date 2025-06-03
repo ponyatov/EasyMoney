@@ -1,0 +1,4 @@
+git make curl
+code meld doxygen clang-format
+g++ cmake gdb gdb-multiarch
+npm nodejs
