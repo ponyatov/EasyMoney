@@ -1,0 +1,7 @@
+{
+    "tasks": {
+        "dev": "deno run -A --watch=src src/server/ssr.tsx",
+        "build": "deno run -A npm:vite build",
+        "preview": "deno run -A src/server/ssr.tsx"
+    }
+}
