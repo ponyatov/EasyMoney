@@ -155,6 +155,7 @@ serve(async (req) => {
     const filePath = url.pathname === "/" ? 
       `${config.STATIC}/index.html` : 
       `${config.STATIC}${url.pathname}`;
+    console.log(`[${new Date().toISOString()}] ${method} ${path} - Serving file: ${filePath}`);
     const response = await serveFile(req, filePath);
     
     // Inject reload script for HTML files
