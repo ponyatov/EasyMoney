@@ -15,7 +15,7 @@ const RELOAD_SCRIPT = `
 `;
 
 const clients = new Set<WebSocket>();
-const watcher = Deno.watchFs("./src");
+const watcher = Deno.watchFs(["./src", "./static"]);
 
 // Watch for file changes
 (async () => {
@@ -37,7 +37,29 @@ const watcher = Deno.watchFs("./src");
 // Start server
 const port = parseInt(Deno.env.get('LIVE') || config.PORT+1);
 
-console.log(`Live reload server running at http://localhost:${port}`);
+// Try to start the server, with fallback ports if the main one is in use
+async function startServer(initialPort: number, maxRetries = 3) {
+  let currentPort = initialPort;
+  let retries = 0;
+  
+  while (retries <= maxRetries) {
+    try {
+      console.log(`Live reload server running at http://localhost:${currentPort}`);
+      return { port: currentPort };
+    } catch (err) {
+      if (err instanceof Deno.errors.AddrInUse && retries < maxRetries) {
+        console.log(`Port ${currentPort} already in use, trying ${currentPort + 1}...`);
+        currentPort++;
+        retries++;
+      } else {
+        throw err;
+      }
+    }
+  }
+  throw new Error(`Could not find an available port after ${maxRetries} attempts`);
+}
+
+const serverOptions = await startServer(port);
 
 // Create server controller
 const controller = new AbortController();
@@ -46,11 +68,36 @@ const { signal } = controller;
 // Handle shutdown signals
 const shutdown = () => {
   console.log("Shutting down livereload server...");
-  watcher.close();
-  clients.forEach(client => client.close());
+  
+  // Close file watcher
+  try {
+    watcher.close();
+    console.log("File watcher closed");
+  } catch (err) {
+    console.error("Error closing file watcher:", err);
+  }
+  
+  // Close all WebSocket connections
+  let closedClients = 0;
+  clients.forEach(client => {
+    try {
+      client.close(1000, "Server shutting down");
+      closedClients++;
+    } catch (err) {
+      console.error("Error closing WebSocket:", err);
+    } finally {
+      clients.delete(client);
+    }
+  });
+  console.log(`Closed ${closedClients} WebSocket connections`);
+  
+  // Abort the server controller to close the HTTP server
   controller.abort();
+  console.log("HTTP server closed");
+  
   // Give time for connections to close before exiting
-  setTimeout(() => Deno.exit(0), 100);
+  console.log("Exiting process...");
+  setTimeout(() => Deno.exit(0), 200);
 };
 
 Deno.addSignalListener("SIGINT", shutdown);
@@ -92,7 +139,9 @@ serve(async (req) => {
   
   // Serve static files
   try {
-    const filePath = url.pathname === "/" ? "./index.html" : "." + url.pathname;
+    const filePath = url.pathname === "/" ? 
+      `${config.STATIC_DIR}/index.html` : 
+      `${config.STATIC_DIR}${url.pathname}`;
     const response = await serveFile(req, filePath);
     
     // Inject reload script for HTML files
@@ -116,11 +165,11 @@ ${style.STYLE}
 <body>
   <h1>404 - Not Found</h1>
   <p>The requested resource could not be found.</p>
-  <pre>${e}</pre>
+  ${e}
 </body>
 </html>`, { 
       status: 404,
       headers: { "Content-Type": "text/html" }
     });
   }
-}, { port, signal });
+}, { port: serverOptions.port, signal });

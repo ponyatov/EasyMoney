@@ -1,4 +1,8 @@
 {
+    "tasks": {
+        "dev": "deno run --allow-net --allow-read --allow-write --allow-env --allow-ffi --allow-run src/server.ts",
+        "live": "deno run --allow-net --allow-read --allow-write --allow-env --allow-ffi --allow-run src/livereload.ts"
+    },
     "imports": {
         "hono": "https://deno.land/x/hono@v3.7.2/mod.ts",
         "sqlite": "https://deno.land/x/sqlite3@0.12.0/mod.ts"
