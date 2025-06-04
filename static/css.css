@@ -9,7 +9,7 @@
     --card-bg: #2a2a2a;          /* Dark grey */
     --accent-color: #4a6b8a;     /* Muted blue accent */
     --error-color: #e6d72a;      /* Yellowish for errors */
-    --error-bg: rgba(230, 215, 42, 0.15); /* Semi-transparent yellow background */
+    --error-bg: rgba(230, 215, 42, 0.1); /* Semi-transparent yellow background */
 }
 
 * {
@@ -79,6 +79,50 @@ p {
     margin: 0.75em 0;
     font-size: 1rem;
     line-height: 1.7;
+}
+
+/* Increase base font size */
+html {
+    font-size: 18px;
+}
+
+/* Adjust heading sizes proportionally */
+h1 {
+    font-size: 2.2rem;
+}
+
+h2 {
+    font-size: 1.4rem;
+}
+
+/* Adjust mobile breakpoint font sizes */
+@media (max-width: 480px) {
+    html {
+        font-size: 16px;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    h2 {
+        font-size: 1.3rem;
+    }
+}
+
+/* Adjust QVGA breakpoint font sizes */
+@media (max-width: 320px), (max-height: 240px) {
+    html {
+        font-size: 14px;
+    }
+    
+    h1 {
+        font-size: 1.7rem;
+    }
+    
+    h2 {
+        font-size: 1.2rem;
+    }
 }
 
 a {
