@@ -243,3 +243,17 @@ a.button {
     min-height: 44px;
     min-width: 44px;
 }
+
+/* Connection status indicators */
+.led {
+    transition: color 0.3s ease;
+    font-weight: 500;
+}
+
+.led.online {
+    color: #4CAF50;
+}
+
+.led.offline {
+    color: #F44336;
+}
