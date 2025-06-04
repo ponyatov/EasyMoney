@@ -1,3 +1,3 @@
 export default {
-    STYLE: '<style>background: black; color: lightgreen;</style>',
+    STYLE: '<style>* { background: black; color: lightgreen; font-style: monospace }</style>',
 };

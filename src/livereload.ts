@@ -39,12 +39,18 @@ const port = parseInt(Deno.env.get('LIVE') || config.PORT+1);
 
 console.log(`Live reload server running at http://localhost:${port}`);
 
+// Create server controller
+const controller = new AbortController();
+const { signal } = controller;
+
 // Handle shutdown signals
 const shutdown = () => {
   console.log("Shutting down livereload server...");
   watcher.close();
   clients.forEach(client => client.close());
-  Deno.exit(0);
+  controller.abort();
+  // Give time for connections to close before exiting
+  setTimeout(() => Deno.exit(0), 100);
 };
 
 Deno.addSignalListener("SIGINT", shutdown);
@@ -101,6 +107,20 @@ serve(async (req) => {
     
     return response;
   } catch (e) {
-    return new Response(`${style.STYLE}Not found`, { status: 404 });
+    return new Response(`<!DOCTYPE html>
+<html>
+<head>
+  <title>404 - Not Found</title>
+  </head>
+${style.STYLE}
+<body>
+  <h1>404 - Not Found</h1>
+  <p>The requested resource could not be found.</p>
+  <pre>${e}</pre>
+</body>
+</html>`, { 
+      status: 404,
+      headers: { "Content-Type": "text/html" }
+    });
   }
-}, { port });
+}, { port, signal });
