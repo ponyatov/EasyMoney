@@ -427,7 +427,7 @@ serve(
 </head>
 <body>
   <header>
-    <h1 class="led error">404 - Not Found</h1>
+    <h1 class="error">404 - Not Found</h1>
   </header>
   <main>
     <section>
