@@ -421,11 +421,13 @@ serve(
 <head>
   <title>404 - Not Found</title>
   <link rel="stylesheet" href="/css.css">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#1a1a1a">
   ${RELOAD_SCRIPT}
 </head>
 <body>
   <header>
-    <h1 class=error>404 - Not Found</h1>
+    <h1 class="led error">404 - Not Found</h1>
   </header>
   <main>
     <section>
