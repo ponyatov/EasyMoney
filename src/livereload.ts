@@ -217,12 +217,30 @@ serve(
                     ? forwardedFor.split(',')[0].trim()
                     : new URL(req.url).hostname || '127.0.0.1';
 
-                // Get client ID from URL or generate a new one
-                const urlParams = new URLSearchParams(url.search);
-                const clientIdFromUrl = urlParams.get('clientId');
-                const id =
-                    clientIdFromUrl ||
-                    `client-${++clientCounter}-${Date.now().toString(36)}`;
+                // Get client ID from cookie, URL, or generate a new one
+                let id;
+                
+                // Try to get from cookie first
+                const cookieHeader = req.headers.get('cookie') || '';
+                const cookies = cookieHeader.split(';');
+                for (const cookie of cookies) {
+                    const [name, value] = cookie.trim().split('=');
+                    if (name === 'livereload_client_id' && value) {
+                        id = value;
+                        break;
+                    }
+                }
+                
+                // If not in cookie, try URL parameter
+                if (!id) {
+                    const urlParams = new URLSearchParams(url.search);
+                    id = urlParams.get('clientId');
+                }
+                
+                // If still not found, generate a new one
+                if (!id) {
+                    id = `client-${++clientCounter}-${Date.now().toString(36)}`;
+                }
 
                 // Store client info
                 const clientInfo: ClientInfo = {
@@ -301,9 +319,25 @@ serve(
                 .toString(36)
                 .substring(2, 7)}`;
 
-            // Extract client ID from URL if available
-            const urlParams = new URLSearchParams(url.search);
-            const clientId = urlParams.get('clientId') || 'unknown';
+            // Extract client ID from cookies if available
+            const cookieHeader = req.headers.get('cookie') || '';
+            let clientId = 'unknown';
+            
+            // Parse cookies to find livereload_client_id
+            const cookies = cookieHeader.split(';');
+            for (const cookie of cookies) {
+                const [name, value] = cookie.trim().split('=');
+                if (name === 'livereload_client_id' && value) {
+                    clientId = value;
+                    break;
+                }
+            }
+            
+            // Fallback to URL parameter if cookie not found
+            if (clientId === 'unknown') {
+                const urlParams = new URLSearchParams(url.search);
+                clientId = urlParams.get('clientId') || 'unknown';
+            }
             
             const notFoundResponse = new Response(
                 `<!DOCTYPE html>
@@ -326,7 +360,7 @@ serve(
     </section>
   </main>
   <footer>
-    <p>EasyMoney</p>
+    <p id=led>EasyMoney</p>
   </footer>
 </body>
 </html>`,
