@@ -1,38 +1,113 @@
+/* EasyMoney CSS - Dark Theme with Mobile Optimization */
+
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
+  --primary-color: #2c7873;    /* Dark teal/green */
+  --secondary-color: #6fb98f;  /* Medium green */
+  --dark-color: #1a1a1a;       /* Very dark grey */
+  --light-color: #e0e0e0;      /* Light grey */
+  --text-color: #f0f0f0;       /* Off-white */
+  --card-bg: #2a2a2a;          /* Dark grey */
+  --accent-color: #4a6b8a;     /* Muted blue accent */
+  --error-color: #e6d72a;      /* Yellowish for errors */
+  --error-bg: rgba(230, 215, 42, 0.1); /* Semi-transparent yellow background */
+  
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+* {
+  box-sizing: border-box;
 }
-a:hover {
-  color: #535bf2;
+
+html {
+  font-size: 18px;
 }
 
 body {
+  font-family: 'Roboto Mono', 'Consolas', 'Monaco', 'Courier New', monospace;
+  line-height: 1.8;
+  color: var(--text-color);
   margin: 0;
-  display: flex;
-  place-items: center;
+  padding: 0;
+  background-color: var(--dark-color);
+  -webkit-text-size-adjust: 100%;
   min-width: 320px;
   min-height: 100vh;
 }
 
+header {
+  background-color: #121212;
+  color: var(--text-color);
+  text-align: center;
+  padding: 1.5rem 0.5rem;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid var(--secondary-color);
+}
+
 h1 {
-  font-size: 3.2em;
+  margin: 0;
+  font-size: 2.2rem;
+  color: var(--primary-color);
+  letter-spacing: 0;
+  font-weight: 600;
   line-height: 1.1;
+}
+
+h2 {
+  font-weight: 400;
+  margin: 0.5rem 0 0;
+  color: var(--secondary-color);
+  font-size: 1.4rem;
+  letter-spacing: 0;
+}
+
+main {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 0.75rem;
+}
+
+section {
+  margin-bottom: 1rem;
+  background-color: var(--card-bg);
+  padding: 1rem;
+  border-radius: 5px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  border-left: 3px solid var(--secondary-color);
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+p {
+  margin: 0.75em 0;
+  font-size: 1.1rem;
+  line-height: 1.8;
+}
+
+a {
+  color: var(--secondary-color);
+  text-decoration: none;
+  transition: color 0.2s ease;
+  word-break: break-word;
+  font-weight: 500;
+}
+
+a:hover {
+  color: var(--primary-color);
+  text-decoration: underline;
+}
+
+footer {
+  text-align: center;
+  padding: 1rem 0.5rem;
+  margin-top: 1rem;
+  background-color: #121212;
+  color: var(--text-color);
+  border-top: 2px solid var(--secondary-color);
+  font-size: 0.9rem;
 }
 
 button {
@@ -42,18 +117,125 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: var(--card-bg);
   cursor: pointer;
   transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  min-height: 44px;
+  min-width: 44px;
 }
 
+button:hover {
+  border-color: var(--secondary-color);
+}
+
+button:focus,
+button:focus-visible {
+  outline: 4px auto var(--primary-color);
+}
+
+/* Mobile optimizations */
+@media (max-width: 480px) {
+  html {
+    font-size: 16px;
+  }
+  
+  h1 {
+    font-size: 2rem;
+  }
+  
+  h2 {
+    font-size: 1.3rem;
+  }
+  
+  section {
+    padding: 0.75rem;
+  }
+}
+
+/* QVGA optimization (240x320) */
+@media (max-width: 320px), (max-height: 240px) {
+  html {
+    font-size: 14px;
+  }
+  
+  h1 {
+    font-size: 1.7rem;
+  }
+  
+  h2 {
+    font-size: 1.2rem;
+  }
+  
+  header {
+    padding: 0.75rem 0.25rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  section {
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  main {
+    padding: 0 0.5rem;
+  }
+  
+  footer {
+    padding: 0.5rem 0.25rem;
+    margin-top: 0.5rem;
+  }
+}
+
+/* Ensure images and tables don't overflow */
+img, table {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Error styling */
+.error, .warning {
+  border-left: 3px solid var(--error-color);
+  background-color: var(--error-bg);
+  padding: 0.75rem;
+  margin: 1rem 0;
+  border-radius: 4px;
+  color: var(--error-color);
+  font-weight: 500;
+}
+
+.error-message {
+  color: var(--error-color);
+  font-weight: 500;
+}
+
+code, pre {
+  font-family: 'Roboto Mono', 'Consolas', 'Monaco', 'Courier New', monospace;
+  font-size: 0.95em;
+}
+
+code.error {
+  background-color: var(--error-bg);
+  color: var(--error-color);
+  padding: 0.2em 0.4em;
+  border-radius: 3px;
+}
+
+/* Connection status indicators */
+.led {
+  transition: color 0.3s ease;
+  font-weight: 500;
+}
+
+.led.online {
+  color: #4CAF50;
+}
+
+.led.offline {
+  color: #F44336;
+}
+
+/* Light theme overrides - disabled by default */
+/*
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
@@ -66,3 +248,4 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+*/
