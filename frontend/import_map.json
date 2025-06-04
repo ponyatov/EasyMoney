@@ -1,0 +1,11 @@
+{
+    "imports": {
+        "hono": "https://deno.land/x/hono@v3.7.2/mod.ts",
+        "react": "https://esm.sh/react@18.2.0",
+        "react-dom": "https://esm.sh/react-dom@18.2.0/server",
+        "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
+        "react-router-dom": "https://esm.sh/react-router-dom@6.16.0",
+        "tailwindcss": "npm:tailwindcss@3.3.0",
+        "autoprefixer": "npm:autoprefixer@10.4.0"
+    }
+}

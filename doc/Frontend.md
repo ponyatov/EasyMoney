@@ -4,6 +4,7 @@
 - [[Hono]]
 - [[Vite]]
 - [[Preact]]
+- [[Pico.css]]
 
 modern, lightweight **[[m/Frontend|Frontend]]** implementation using **[[Deno]]** (with [[Vite]]) and **[[Hono]]** for server-side rendering ([[Web/SSR|SSR]]) - all in [[TypeScript]]:
 
@@ -21,4 +22,3 @@ easymoney-frontend/
 ├── deno.json            # Deno config
 └── import_map.json      # Dependency mapping
 ```
-
