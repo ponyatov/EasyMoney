@@ -1,4 +1,4 @@
-import config from './config.ts';
+import config from '../config.ts';
 import app from './api.ts';
 
 const port = parseInt(Deno.env.get('PORT') || config.PORT);

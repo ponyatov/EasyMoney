@@ -1,4 +1,4 @@
-import config from './config.ts';
+import config from '../config.ts';
 
 import { serve } from 'std/http/server';
 import { serveFile } from 'std/http/file_server';
@@ -133,7 +133,7 @@ const watcher = Deno.watchFs(['./src', './static']);
 })();
 
 // Start server
-const port = parseInt(Deno.env.get('LIVE') || config.PORT + 1);
+const port = parseInt(Deno.env.get('LIVE') || config.PORT);
 
 // Try to start the server, with fallback ports if the main one is in use
 async function startServer(initialPort: number, maxRetries = 3) {
@@ -271,7 +271,7 @@ serve(
 
                 // Get client ID from cookie, URL, or generate a new one
                 let id;
-                
+
                 // Try to get from cookie first
                 const cookieHeader = req.headers.get('cookie') || '';
                 const cookies = cookieHeader.split(';');
@@ -282,13 +282,13 @@ serve(
                         break;
                     }
                 }
-                
+
                 // If not in cookie, try URL parameter
                 if (!id) {
                     const urlParams = new URLSearchParams(url.search);
                     id = urlParams.get('clientId');
                 }
-                
+
                 // If still not found, generate a new one
                 if (!id) {
                     id = `client-${++clientCounter}-${Date.now().toString(36)}`;
@@ -343,13 +343,18 @@ serve(
             const relativePath =
                 url.pathname === '/' ? 'index.html' : url.pathname.slice(1);
             const filePath = join(basePath, config.STATIC, relativePath);
-            
+
             // Log file request with type indication
-            const fileType = filePath.endsWith('.json') ? 'JSON' : 
-                            filePath.endsWith('.html') ? 'HTML' :
-                            filePath.endsWith('.js') ? 'JS' :
-                            filePath.endsWith('.css') ? 'CSS' : 'File';
-            
+            const fileType = filePath.endsWith('.json')
+                ? 'JSON'
+                : filePath.endsWith('.html')
+                ? 'HTML'
+                : filePath.endsWith('.js')
+                ? 'JS'
+                : filePath.endsWith('.css')
+                ? 'CSS'
+                : 'File';
+
             console.log(
                 `[${new Date().toISOString()}] ${method} ${path} - Serving ${fileType}: ${filePath}`
             );
@@ -362,11 +367,11 @@ serve(
                 headers.set('Cache-Control', 'no-cache');
                 const manifestResponse = new Response(response.body, {
                     headers,
-                    status: response.status
+                    status: response.status,
                 });
                 return logResponse(manifestResponse, 'Manifest');
             }
-            
+
             // Inject reload script for HTML files
             if (filePath.endsWith('.html')) {
                 const text = new TextDecoder().decode(
@@ -393,7 +398,7 @@ serve(
             // Extract client ID from cookies if available
             const cookieHeader = req.headers.get('cookie') || '';
             let clientId = 'unknown';
-            
+
             // Parse cookies to find livereload_client_id
             const cookies = cookieHeader.split(';');
             for (const cookie of cookies) {
@@ -403,13 +408,13 @@ serve(
                     break;
                 }
             }
-            
+
             // Fallback to URL parameter if cookie not found
             if (clientId === 'unknown') {
                 const urlParams = new URLSearchParams(url.search);
                 clientId = urlParams.get('clientId') || 'unknown';
             }
-            
+
             const notFoundResponse = new Response(
                 `<!DOCTYPE html>
 <html>
