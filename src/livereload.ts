@@ -1,5 +1,4 @@
 import config from './config.ts';
-import api from './api.ts';
 
 import style from './style.ts';
 
@@ -21,7 +20,7 @@ const watcher = Deno.watchFs(["./src", "./static"]);
 (async () => {
   for await (const event of watcher) {
     if (event.kind === "modify" || event.kind === "create") {
-      console.log(`File changed: ${event.paths.join(", ")}`);
+      console.log(`[${new Date().toISOString()}] FILE ${event.kind.toUpperCase()} - ${event.paths.join(", ")}`);
       // Notify all clients
       clients.forEach((client) => {
         try {
@@ -139,16 +138,7 @@ serve(async (req) => {
     return logResponse(response, "WebSocket");
   }
   
-  // Handle API requests
-  if (url.pathname.startsWith("/api")) {
-    // Rewrite URL to remove /api prefix
-    req = new Request(
-      new URL(url.pathname.replace(/^\/api/, "") + url.search, req.url),
-      req
-    );
-    const apiResponse = await api.fetch(req);
-    return logResponse(apiResponse, "API");
-  }
+
   
   // Serve static files
   try {
