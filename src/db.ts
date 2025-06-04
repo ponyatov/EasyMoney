@@ -1,9 +1,19 @@
-import { DB } from 'https://deno.land/x/sqlite@v3.8/mod.ts';
+import { Database } from 'sqlite';
+import config from './config.ts';
 
-export const db = new DB('tmp/easymoney.db');
+// Ensure directory exists
+try {
+    Deno.mkdirSync('tmp', { recursive: true });
+} catch (e) {
+    if (!(e instanceof Deno.errors.AlreadyExists)) {
+        throw e;
+    }
+}
+
+export const db = new Database(config.DB);
 
 // Initialize schema
-db.exec(`
+db.prepare(`
   CREATE TABLE IF NOT EXISTS transactions (
     id         INTEGER PRIMARY KEY,
     amount     INTEGER NOT NULL,

@@ -43,9 +43,18 @@
             "presentation"   : {"showReuseMessage": true, "focus": false, "reveal": "silent", "close": false}
         },
         {
+            "label": "browser: open",
+            "type": "shell",
+            "command": "echo",
+            "args": ["Opening browser at http://localhost:12345"],
+            "problemMatcher": [],
+            "presentation": {"reveal": "never"},
+            "postCommands": ["simpleBrowser.show:http://localhost:12345"]
+        },
+        {
             "label"          : "deno: run",
             "type"           : "shell",
-            "command"        : "deno run --allow-net --allow-write src/api.ts",
+            "command"        : "deno task start",
             "problemMatcher" : [],
             "group"          : {"kind": "build", "isDefault": true },
             "presentation"   : {"showReuseMessage": true, "focus": false, "reveal": "silent", "close": false}
