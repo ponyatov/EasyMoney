@@ -3,5 +3,5 @@
 export default {
     PORT: 12345,
     DB: 'tmp/easymoney.db',
-    STATIC_DIR: './static',
+    STATIC: './static',
 };
