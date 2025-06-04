@@ -6,7 +6,24 @@ import { join } from 'std/path';
 
 const RELOAD_SCRIPT = `
 <script>
-  const clientId = 'client-' + Math.random().toString(36).substring(2, 10) + '-' + Date.now().toString(36);
+  // Get client ID from cookie or generate a new one
+  function getClientId() {
+    const cookieName = 'livereload_client_id';
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      if (cookie.startsWith(cookieName + '=')) {
+        return cookie.substring(cookieName.length + 1);
+      }
+    }
+    // No cookie found, generate new ID
+    const newId = 'client-' + Math.random().toString(36).substring(2, 10) + '-' + Date.now().toString(36);
+    // Set cookie with 30-day expiration
+    document.cookie = cookieName + '=' + newId + ';path=/;max-age=2592000;samesite=strict';
+    return newId;
+  }
+  
+  const clientId = getClientId();
   console.log('LiveReload client ID:', clientId);
   const socket = new WebSocket('ws://' + location.host + '/ws?clientId=' + clientId);
   socket.onmessage = () => location.reload();
