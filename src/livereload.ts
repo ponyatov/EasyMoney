@@ -23,10 +23,62 @@ const RELOAD_SCRIPT = `
     return newId;
   }
   
+  // Update LED elements based on connection status
+  function updateLedStatus(isOnline) {
+    const ledElements = document.querySelectorAll('.led');
+    ledElements.forEach(el => {
+      if (isOnline) {
+        el.classList.remove('offline');
+        el.classList.add('online');
+      } else {
+        el.classList.remove('online');
+        el.classList.add('offline');
+      }
+    });
+  }
+  
   const clientId = getClientId();
   console.log('LiveReload client ID:', clientId);
+  
+  // Create WebSocket connection
   const socket = new WebSocket('ws://' + location.host + '/ws?clientId=' + clientId);
+  
+  // Connection opened
+  socket.onopen = () => {
+    console.log('LiveReload connected');
+    updateLedStatus(true);
+  };
+  
+  // Connection closed
+  socket.onclose = () => {
+    console.log('LiveReload disconnected');
+    updateLedStatus(false);
+    
+    // Try to reconnect after 3 seconds
+    setTimeout(() => {
+      console.log('Attempting to reconnect...');
+      window.location.reload();
+    }, 3000);
+  };
+  
+  // Connection error
+  socket.onerror = (error) => {
+    console.error('LiveReload error:', error);
+    updateLedStatus(false);
+  };
+  
+  // Handle messages (reload)
   socket.onmessage = () => location.reload();
+  
+  // Set initial state as offline until connection is established
+  updateLedStatus(false);
+  
+  // Send ping every 30 seconds to keep connection alive
+  setInterval(() => {
+    if (socket.readyState === WebSocket.OPEN) {
+      socket.send('ping');
+    }
+  }, 3000);
 </script>
 `;
 
@@ -360,7 +412,7 @@ serve(
     </section>
   </main>
   <footer>
-    <p id=led>EasyMoney</p>
+    <p class=led>EasyMoney</p>
   </footer>
 </body>
 </html>`,
