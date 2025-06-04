@@ -309,7 +309,7 @@ serve(
     </section>
   </main>
   <footer>
-    <p>EasyMoney LiveReload Server</p>
+    <p>EasyMoney</p>
   </footer>
 </body>
 </html>`,
