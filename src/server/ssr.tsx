@@ -5,9 +5,19 @@ import App from '../client/app.tsx';
 const app = new Hono();
 
 app.get('*', async (c) => {
-    const stream = await renderToReadableStream(<App />);
+    const stream = await renderToReadableStream(
+        <App />,
+        {
+            bootstrapScripts: ['/client.js'],
+            bootstrapModules: ['/client.js'],
+        }
+    );
+    
     return new Response(stream, {
-        headers: { 'Content-Type': 'text/html' },
+        headers: { 
+            'Content-Type': 'text/html',
+            'Color-Scheme': 'dark' 
+        },
     });
 });
 

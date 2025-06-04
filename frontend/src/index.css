@@ -11,6 +11,7 @@
   --error-color: #e6d72a;      /* Yellowish for errors */
   --error-bg: rgba(230, 215, 42, 0.1); /* Semi-transparent yellow background */
   
+  color-scheme: dark;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -234,18 +235,4 @@ code.error {
   color: #F44336;
 }
 
-/* Light theme overrides - disabled by default */
-/*
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
-}
-*/
+/* Light theme overrides - completely disabled */
