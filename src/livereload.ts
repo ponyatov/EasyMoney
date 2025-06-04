@@ -18,8 +18,8 @@ const RELOAD_SCRIPT = `
     }
     // No cookie found, generate new ID
     const newId = 'client-' + Math.random().toString(36).substring(2, 10) + '-' + Date.now().toString(36);
-    // Set cookie with 30-day expiration
-    document.cookie = cookieName + '=' + newId + ';path=/;max-age=2592000;samesite=strict';
+    // Set cookie with 15-minute expiration (900 seconds)
+    document.cookie = cookieName + '=' + newId + ';path=/;max-age=900;samesite=strict';
     return newId;
   }
   
