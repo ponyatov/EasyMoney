@@ -4,7 +4,7 @@
         "ref":true,
     },
     "files.exclude": {
-        "doc/html": true, "node_modules": true,
+        "doc/html": true, "**/node_modules": true,
     },
     "files.watcherExclude": {
         "ref/**": true, "target/**": true, "obj/**": true,
