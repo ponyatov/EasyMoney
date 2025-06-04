@@ -10,7 +10,7 @@ try {
     }
 }
 
-export const db = new Database(config.DB);
+export const db = new Database(Deno.env.get('DB') || config.DB);
 
 // Initialize schema
 db.prepare(`

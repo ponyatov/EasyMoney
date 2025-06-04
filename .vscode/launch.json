@@ -2,28 +2,27 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "deno:start",
+            "name": "Deno: Run",
             "type": "node",
             "request": "launch",
             "cwd": "${workspaceFolder}",
-            "runtimeExecutable": "denon",
-            "runtimeArgs": ["start"],
-            "outputCapture": "std"
+            "runtimeExecutable": "deno",
+            "runtimeArgs": ["run", "--allow-all", "src/server.ts"],
+            "attachSimplePort": 9229
         },
         {
-            "name": "deno:live",
+            "name": "Deno: Debug",
             "type": "node",
             "request": "launch",
             "cwd": "${workspaceFolder}",
-            "runtimeExecutable": "denon",
-            "runtimeArgs": ["live"],
-            "outputCapture": "std"
-        }
-    ],
-    "compounds": [
-        {
-            "name": "deno:devserver",
-            "configurations": ["deno:start", "deno:live"]
+            "runtimeExecutable": "deno",
+            "runtimeArgs": [
+                "run",
+                "--inspect-brk",
+                "--allow-all",
+                "src/server.ts"
+            ],
+            "attachSimplePort": 9229
         }
     ]
 }

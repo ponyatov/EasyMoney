@@ -1,11 +1,15 @@
 {
-    "$schema": "https://deno.land/x/denon/schema.json",
     "scripts": {
         "start": {
-            "cmd": "deno run src/api.ts",
+            "cmd": "deno run src/server.ts",
             "desc": "run my server",
-            "allow": ["net", "read", "write", "env", "ffi"],
+            "allow": ["net", "read", "write", "env", "ffi", "sig"],
             "watch": ["src/"]
+        },
+        "live": {
+            "cmd": "deno run --allow-net --allow-read --allow-write src/livereload.ts",
+            "desc": "start live reload server",
+            "watch": ["src/", "public/"]
         }
     }
 }

@@ -49,7 +49,7 @@
     //   "typescript.updateImportsOnFileMove.enabled": "always",
     //   "javascript.updateImportsOnFileMove.enabled": "always",
     "deno.enable": true,
-    "deno.unstable": [],
+    // "deno.unstable": [],
 
     // clang-format
     "clang-format.executable"     : "clang-format",
