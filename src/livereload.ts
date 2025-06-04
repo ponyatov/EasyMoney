@@ -142,9 +142,10 @@ serve(async (req) => {
   
   // Serve static files
   try {
-    const filePath = url.pathname === "/" ? 
-      `${config.STATIC}/index.html` : 
-      `${config.STATIC}${url.pathname}`;
+    // Use absolute paths for serveFile
+    const basePath = Deno.cwd();
+    const relativePath = url.pathname === "/" ? "index.html" : url.pathname.slice(1);
+    const filePath = join(basePath, config.STATIC, relativePath);
     console.log(`[${new Date().toISOString()}] ${method} ${path} - Serving file: ${filePath}`);
     const response = await serveFile(req, filePath);
     
