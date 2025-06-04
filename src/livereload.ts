@@ -1,7 +1,5 @@
 import config from './config.ts';
 
-import style from './style.ts';
-
 import { serve } from 'std/http/server';
 import { serveFile } from 'std/http/file_server';
 import { join } from 'std/path';
@@ -47,9 +45,17 @@ const watcher = Deno.watchFs(['./src', './static']);
             clients.forEach((clientInfo, socket) => {
                 try {
                     socket.send('reload');
-                    console.log(`[${new Date().toISOString()}] RELOAD - Sent to client: ${clientInfo.id}`);
+                    console.log(
+                        `[${new Date().toISOString()}] RELOAD - Sent to client: ${
+                            clientInfo.id
+                        }`
+                    );
                 } catch (err) {
-                    console.log(`[${new Date().toISOString()}] RELOAD - Failed for client: ${clientInfo.id}`);
+                    console.log(
+                        `[${new Date().toISOString()}] RELOAD - Failed for client: ${
+                            clientInfo.id
+                        }`
+                    );
                     clients.delete(socket);
                 }
             });
@@ -84,13 +90,18 @@ async function startServer(initialPort: number, maxRetries = 3) {
                 retries++;
             } else {
                 const timestamp = new Date().toISOString();
-                console.error(`[${timestamp}] ERROR - Failed to start server:`, err);
+                console.error(
+                    `[${timestamp}] ERROR - Failed to start server:`,
+                    err
+                );
                 throw err;
             }
         }
     }
     const timestamp = new Date().toISOString();
-    console.error(`[${timestamp}] ERROR - Could not find an available port after ${maxRetries} attempts`);
+    console.error(
+        `[${timestamp}] ERROR - Could not find an available port after ${maxRetries} attempts`
+    );
     throw new Error(
         `Could not find an available port after ${maxRetries} attempts`
     );
@@ -112,7 +123,10 @@ const shutdown = () => {
         watcher.close();
         console.log(`[${timestamp}] SERVER - File watcher closed`);
     } catch (err) {
-        console.error(`[${timestamp}] ERROR - Failed to close file watcher:`, err);
+        console.error(
+            `[${timestamp}] ERROR - Failed to close file watcher:`,
+            err
+        );
     }
 
     // Close all WebSocket connections
@@ -120,15 +134,22 @@ const shutdown = () => {
     clients.forEach((clientInfo, socket) => {
         try {
             socket.close(1000, 'Server shutting down');
-            console.log(`[${timestamp}] WS - Closed connection: ${clientInfo.id}`);
+            console.log(
+                `[${timestamp}] WS - Closed connection: ${clientInfo.id}`
+            );
             closedClients++;
         } catch (err) {
-            console.error(`[${timestamp}] ERROR - Failed to close WebSocket for ${clientInfo.id}:`, err);
+            console.error(
+                `[${timestamp}] ERROR - Failed to close WebSocket for ${clientInfo.id}:`,
+                err
+            );
         } finally {
             clients.delete(socket);
         }
     });
-    console.log(`[${timestamp}] SERVER - Closed ${closedClients} WebSocket connections`);
+    console.log(
+        `[${timestamp}] SERVER - Closed ${closedClients} WebSocket connections`
+    );
 
     // Abort the server controller to close the HTTP server
     controller.abort();
@@ -175,22 +196,25 @@ serve(
             socket.onopen = () => {
                 // Extract client IP from request
                 const forwardedFor = req.headers.get('x-forwarded-for');
-                const ip = forwardedFor ? forwardedFor.split(',')[0].trim() : 
-                         new URL(req.url).hostname || '127.0.0.1';
-                
+                const ip = forwardedFor
+                    ? forwardedFor.split(',')[0].trim()
+                    : new URL(req.url).hostname || '127.0.0.1';
+
                 // Get client ID from URL or generate a new one
                 const urlParams = new URLSearchParams(url.search);
                 const clientIdFromUrl = urlParams.get('clientId');
-                const id = clientIdFromUrl || `client-${++clientCounter}-${Date.now().toString(36)}`;
-                
+                const id =
+                    clientIdFromUrl ||
+                    `client-${++clientCounter}-${Date.now().toString(36)}`;
+
                 // Store client info
                 const clientInfo: ClientInfo = {
                     socket,
                     ip,
                     id,
-                    connectedAt: new Date()
+                    connectedAt: new Date(),
                 };
-                
+
                 clients.set(socket, clientInfo);
                 console.log(
                     `[${new Date().toISOString()}] WS - Client connected: ${id} from ${ip} (${
@@ -202,13 +226,16 @@ serve(
             socket.onclose = () => {
                 const clientInfo = clients.get(socket);
                 clients.delete(socket);
-                
+
                 if (clientInfo) {
-                    const duration = Date.now() - clientInfo.connectedAt.getTime();
+                    const duration =
+                        Date.now() - clientInfo.connectedAt.getTime();
                     console.log(
-                        `[${new Date().toISOString()}] WS - Client disconnected: ${clientInfo.id} from ${clientInfo.ip} after ${Math.round(duration/1000)}s (${
-                            clients.size
-                        } total)`
+                        `[${new Date().toISOString()}] WS - Client disconnected: ${
+                            clientInfo.id
+                        } from ${clientInfo.ip} after ${Math.round(
+                            duration / 1000
+                        )}s (${clients.size} total)`
                     );
                 } else {
                     console.log(
@@ -253,27 +280,44 @@ serve(
             return logResponse(response, 'Static');
         } catch (e) {
             // Generate a request ID for tracking
-            const requestId = `req-${Date.now().toString(36)}-${Math.random().toString(36).substring(2, 7)}`;
+            const requestId = `req-${Date.now().toString(36)}-${Math.random()
+                .toString(36)
+                .substring(2, 7)}`;
+
+            // Extract client ID from URL if available
+            const urlParams = new URLSearchParams(url.search);
+            const clientId = urlParams.get('clientId') || 'unknown';
             
             const notFoundResponse = new Response(
                 `<!DOCTYPE html>
 <html>
 <head>
   <title>404 - Not Found</title>
+  <link rel="stylesheet" href="/css.css">
   ${RELOAD_SCRIPT}
 </head>
 <body>
-  <h1>404 - Not Found</h1>
-  <p>The requested resource could not be found.</p>
-  <p><small>Request ID: ${requestId}</small></p>
-  <p><small>Path: ${path}</small></p>
+  <header>
+    <h1>404 - Not Found</h1>
+  </header>
+  <main>
+    <section>
+      <p>The requested resource could not be found.</p>
+      <p><small>Client ID: ${clientId}</small></p>
+      <p><small>Request ID: ${requestId}</small></p>
+      <p><small>Path: ${path}</small></p>
+    </section>
+  </main>
+  <footer>
+    <p>EasyMoney LiveReload Server</p>
+  </footer>
 </body>
 </html>`,
                 {
                     status: 404,
-                    headers: { 
+                    headers: {
                         'Content-Type': 'text/html',
-                        'X-Request-ID': requestId
+                        'X-Request-ID': requestId,
                     },
                 }
             );
