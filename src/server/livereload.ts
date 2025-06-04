@@ -343,11 +343,30 @@ serve(
             const relativePath =
                 url.pathname === '/' ? 'index.html' : url.pathname.slice(1);
             const filePath = join(basePath, config.STATIC, relativePath);
+            
+            // Log file request with type indication
+            const fileType = filePath.endsWith('.json') ? 'JSON' : 
+                            filePath.endsWith('.html') ? 'HTML' :
+                            filePath.endsWith('.js') ? 'JS' :
+                            filePath.endsWith('.css') ? 'CSS' : 'File';
+            
             console.log(
-                `[${new Date().toISOString()}] ${method} ${path} - Serving file: ${filePath}`
+                `[${new Date().toISOString()}] ${method} ${path} - Serving ${fileType}: ${filePath}`
             );
             const response = await serveFile(req, filePath);
 
+            // Special handling for manifest.json
+            if (filePath.endsWith('manifest.json')) {
+                const headers = new Headers(response.headers);
+                headers.set('Content-Type', 'application/manifest+json');
+                headers.set('Cache-Control', 'no-cache');
+                const manifestResponse = new Response(response.body, {
+                    headers,
+                    status: response.status
+                });
+                return logResponse(manifestResponse, 'Manifest');
+            }
+            
             // Inject reload script for HTML files
             if (filePath.endsWith('.html')) {
                 const text = new TextDecoder().decode(

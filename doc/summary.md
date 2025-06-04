@@ -11,3 +11,5 @@
 3. [Core Components](https://gitflic.ru/project/dponyatov/easymoney/blob?file=doc%2FCore%20Components.md&branch=dponyatov&mode=markdown)
 4. [Tech Stack](https://gitflic.ru/project/dponyatov/easymoney/blob?file=doc%2FTech%20Stack.md&branch=dponyatov&mode=markdown)
 	- [Backend](https://gitflic.ru/project/dponyatov/easymoney/blob?file=doc%2FBackend.md&branch=dponyatov&mode=markdown)
+	- [Frontend](https://gitflic.ru/project/dponyatov/easymoney/blob?file=doc%2FFrontend.md&branch=dponyatov&mode=markdown)
+	- 
