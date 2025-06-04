@@ -16,7 +16,7 @@ const RELOAD_SCRIPT = `
 `;
 
 // Store clients with their metadata
-interface ClientIninterface ClientInfo {
+interface ClientInfo {
     socket: WebSocket;
     ip: string;
     id: string;
@@ -260,7 +260,6 @@ serve(
 <html>
 <head>
   <title>404 - Not Found</title>
-  ${style.STYLE}
   ${RELOAD_SCRIPT}
 </head>
 <body>
