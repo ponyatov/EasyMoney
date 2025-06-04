@@ -20,6 +20,7 @@
                 "run",
                 "--inspect-brk",
                 "--allow-all",
+                "--watch=src",
                 "src/server.ts"
             ],
             "attachSimplePort": 9229

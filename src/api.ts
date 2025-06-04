@@ -3,8 +3,10 @@ import { db } from './db.ts';
 
 const app = new Hono();
 
+const STYLE = '<style></style>';
+
 // Health check
-app.get('/', (c) => c.text('EasyMoney Deno API'));
+app.get('/', (c) => c.html(`${STYLE}EasyMoney Deno API`));
 
 // Transaction endpoint
 app.post('/transactions', async (c) => {
