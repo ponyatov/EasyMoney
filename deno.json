@@ -5,6 +5,9 @@
     },
     "imports": {
         "hono": "https://deno.land/x/hono@v3.7.2/mod.ts",
-        "sqlite": "https://deno.land/x/sqlite3@0.12.0/mod.ts"
+        "sqlite": "https://deno.land/x/sqlite3@0.12.0/mod.ts",
+        "std/http/server": "https://deno.land/std@0.204.0/http/server.ts",
+        "std/http/file_server": "https://deno.land/std@0.204.0/http/file_server.ts",
+        "std/path": "https://deno.land/std@0.204.0/path/mod.ts"
     }
 }
