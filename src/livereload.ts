@@ -105,6 +105,18 @@ Deno.addSignalListener("SIGTERM", shutdown);
 
 serve(async (req) => {
   const url = new URL(req.url);
+  const startTime = Date.now();
+  const method = req.method;
+  const path = url.pathname;
+  
+  console.log(`[${new Date().toISOString()}] ${method} ${path} - Request received`);
+  
+  // Create a wrapper function to log the response
+  const logResponse = (response: Response, routeType: string) => {
+    const duration = Date.now() - startTime;
+    console.log(`[${new Date().toISOString()}] ${method} ${path} - ${response.status} ${routeType} (${duration}ms)`);
+    return response;
+  };
   
   // WebSocket connection
   if (url.pathname === "/ws") {
@@ -124,7 +136,7 @@ serve(async (req) => {
       console.log("Client disconnected");
     };
     
-    return response;
+    return logResponse(response, "WebSocket");
   }
   
   // Handle API requests
@@ -134,42 +146,44 @@ serve(async (req) => {
       new URL(url.pathname.replace(/^\/api/, "") + url.search, req.url),
       req
     );
-    return api.fetch(req);
+    const apiResponse = await api.fetch(req);
+    return logResponse(apiResponse, "API");
   }
   
   // Serve static files
   try {
     const filePath = url.pathname === "/" ? 
-      `${config.STATIC_DIR}/index.html` : 
-      `${config.STATIC_DIR}${url.pathname}`;
+      `${config.STATIC}/index.html` : 
+      `${config.STATIC}${url.pathname}`;
     const response = await serveFile(req, filePath);
     
     // Inject reload script for HTML files
     if (filePath.endsWith(".html")) {
       const text = new TextDecoder().decode(response.body as Uint8Array);
       const injected = text.replace("</body>", `${RELOAD_SCRIPT}</body>`);
-      return new Response(injected, {
+      const htmlResponse = new Response(injected, {
         headers: response.headers,
         status: response.status,
       });
+      return logResponse(htmlResponse, "HTML");
     }
     
-    return response;
+    return logResponse(response, "Static");
   } catch (e) {
-    return new Response(`<!DOCTYPE html>
+    const notFoundResponse = new Response(`<!DOCTYPE html>
 <html>
 <head>
   <title>404 - Not Found</title>
-  </head>
-${style.STYLE}
+  ${style.STYLE}
+</head>
 <body>
   <h1>404 - Not Found</h1>
   <p>The requested resource could not be found.</p>
-  ${e}
 </body>
 </html>`, { 
       status: 404,
       headers: { "Content-Type": "text/html" }
     });
+    return logResponse(notFoundResponse, "NotFound");
   }
 }, { port: serverOptions.port, signal });
