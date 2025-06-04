@@ -1,4 +1,7 @@
 import config from './config.ts';
+import api from './api.ts';
+
+import style from './style.ts';
 
 import { serve } from "https://deno.land/std@0.204.0/http/server.ts";
 import { serveFile } from "https://deno.land/std@0.204.0/http/file_server.ts";
@@ -12,7 +15,7 @@ const RELOAD_SCRIPT = `
 `;
 
 const clients = new Set<WebSocket>();
-const watcher = Deno.watchFs("./");
+const watcher = Deno.watchFs("./src");
 
 // Watch for file changes
 (async () => {
@@ -35,6 +38,17 @@ const watcher = Deno.watchFs("./");
 const port = parseInt(Deno.env.get('LIVE') || config.PORT+1);
 
 console.log(`Live reload server running at http://localhost:${port}`);
+
+// Handle shutdown signals
+const shutdown = () => {
+  console.log("Shutting down livereload server...");
+  watcher.close();
+  clients.forEach(client => client.close());
+  Deno.exit(0);
+};
+
+Deno.addSignalListener("SIGINT", shutdown);
+Deno.addSignalListener("SIGTERM", shutdown);
 
 serve(async (req) => {
   const url = new URL(req.url);
@@ -60,6 +74,16 @@ serve(async (req) => {
     return response;
   }
   
+  // Handle API requests
+  if (url.pathname.startsWith("/api")) {
+    // Rewrite URL to remove /api prefix
+    req = new Request(
+      new URL(url.pathname.replace(/^\/api/, "") + url.search, req.url),
+      req
+    );
+    return api.fetch(req);
+  }
+  
   // Serve static files
   try {
     const filePath = url.pathname === "/" ? "./index.html" : "." + url.pathname;
@@ -77,6 +101,6 @@ serve(async (req) => {
     
     return response;
   } catch (e) {
-    return new Response("Not found", { status: 404 });
+    return new Response(`${style.STYLE}Not found`, { status: 404 });
   }
 }, { port });
