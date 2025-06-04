@@ -7,7 +7,7 @@
             "request": "launch",
             "cwd": "${workspaceFolder}",
             "runtimeExecutable": "deno",
-            "runtimeArgs": ["run", "--allow-all", "src/server.ts"],
+            "runtimeArgs": ["run", "--allow-all", "src/server/server.ts"],
             "attachSimplePort": 9229
         },
         {
@@ -21,7 +21,7 @@
                 "--inspect-brk",
                 "--allow-all",
                 "--watch=src",
-                "src/server.ts"
+                "src/server/livereload.ts"
             ],
             "attachSimplePort": 9229
         }

@@ -1,13 +1,13 @@
 {
     "scripts": {
         "start": {
-            "cmd": "deno run src/server.ts",
+            "cmd": "deno run src/server/server.ts",
             "desc": "run my server",
             "allow": ["net", "read", "write", "env", "ffi"],
             "watch": ["src/", "public/"]
         },
         "live": {
-            "cmd": "deno run src/livereload.ts",
+            "cmd": "deno run src/server/livereload.ts",
             "allow": ["net", "read", "write", "env", "ffi"],
             "watch": ["src/", "public/"]
         }
