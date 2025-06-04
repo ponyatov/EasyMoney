@@ -22,6 +22,11 @@ const watcher = Deno.watchFs(["./src", "./static"]);
     if (event.kind === "modify" || event.kind === "create") {
       console.log(`[${new Date().toISOString()}] FILE ${event.kind.toUpperCase()} - ${event.paths.join(", ")}`);
       // Notify all clients
+      // Count active clients
+      const activeClients = clients.size;
+      console.log(`[${new Date().toISOString()}] RELOAD - Notifying ${activeClients} client(s)`);
+      
+      // Send reload signal to all clients
       clients.forEach((client) => {
         try {
           client.send("reload");
@@ -127,12 +132,12 @@ serve(async (req) => {
     
     socket.onopen = () => {
       clients.add(socket);
-      console.log("Client connected");
+      console.log(`[${new Date().toISOString()}] WEBSOCKET - Client connected (${clients.size} total)`);
     };
     
     socket.onclose = () => {
       clients.delete(socket);
-      console.log("Client disconnected");
+      console.log(`[${new Date().toISOString()}] WEBSOCKET - Client disconnected (${clients.size} total)`);
     };
     
     return logResponse(response, "WebSocket");
@@ -171,6 +176,7 @@ serve(async (req) => {
 <body>
   <h1>404 - Not Found</h1>
   <p>The requested resource could not be found.</p>
+  ${RELOAD_SCRIPT}
 </body>
 </html>`, { 
       status: 404,
