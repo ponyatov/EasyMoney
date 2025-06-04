@@ -1,10 +1,6 @@
 {
-    "imports": {
-        "hono": "https://deno.land/x/hono@v3.7.2/mod.ts",
-        "sqlite": "https://deno.land/x/sqlite3@0.12.0/mod.ts"
-    },
     "tasks": {
-        "start": "deno run --allow-all src/server.ts"
+        "start": "deno run --allow-all --watch=src src/server.ts"
     },
     "permissions": {
         "net": true,
@@ -12,5 +8,9 @@
         "write": true,
         "env": true,
         "ffi": true
+    },
+    "imports": {
+        "hono": "https://deno.land/x/hono@v3.7.2/mod.ts",
+        "sqlite": "https://deno.land/x/sqlite3@0.12.0/mod.ts"
     }
 }

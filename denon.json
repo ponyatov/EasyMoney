@@ -1,0 +1,11 @@
+{
+    "$schema": "https://deno.land/x/denon/schema.json",
+    "scripts": {
+        "start": {
+            "cmd": "deno run src/api.ts",
+            "desc": "run my server",
+            "allow": ["net", "read", "write", "env", "ffi"],
+            "watch": ["src/"]
+        }
+    }
+}

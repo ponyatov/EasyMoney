@@ -1,5 +1,29 @@
 {
     "version": "0.2.0",
     "configurations": [
+        {
+            "name": "deno:start",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "runtimeExecutable": "denon",
+            "runtimeArgs": ["start"],
+            "outputCapture": "std"
+        },
+        {
+            "name": "deno:live",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "runtimeExecutable": "denon",
+            "runtimeArgs": ["live"],
+            "outputCapture": "std"
+        }
+    ],
+    "compounds": [
+        {
+            "name": "deno:devserver",
+            "configurations": ["deno:start", "deno:live"]
+        }
     ]
 }
