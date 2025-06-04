@@ -150,15 +150,15 @@ footer {
 /* Mobile optimizations */
 @media (max-width: 480px) {
     html {
-        font-size: 14px;
+        font-size: 16px;
     }
     
     h1 {
-        font-size: 1.8rem;
+        font-size: 2rem;
     }
     
     h2 {
-        font-size: 1.1rem;
+        font-size: 1.3rem;
     }
     
     section {
@@ -169,15 +169,15 @@ footer {
 /* QVGA optimization (240x320) */
 @media (max-width: 320px), (max-height: 240px) {
     html {
-        font-size: 12px;
+        font-size: 14px;
     }
     
     h1 {
-        font-size: 1.5rem;
+        font-size: 1.7rem;
     }
     
     h2 {
-        font-size: 1rem;
+        font-size: 1.2rem;
     }
     
     header {
@@ -222,12 +222,16 @@ img, table {
     font-weight: 500;
 }
 
+code, pre {
+    font-family: 'Roboto Mono', 'Consolas', 'Monaco', 'Courier New', monospace;
+    font-size: 0.95em;
+}
+
 code.error {
     background-color: var(--error-bg);
     color: var(--error-color);
     padding: 0.2em 0.4em;
     border-radius: 3px;
-    font-family: monospace;
 }
 
 /* Improve tap targets for mobile */
