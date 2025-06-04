@@ -8,6 +8,8 @@
     --text-color: #f0f0f0;       /* Off-white */
     --card-bg: #2a2a2a;          /* Dark grey */
     --accent-color: #4a6b8a;     /* Muted blue accent */
+    --error-color: #e6d72a;      /* Yellowish for errors */
+    --error-bg: rgba(230, 215, 42, 0.15); /* Semi-transparent yellow background */
 }
 
 * {
@@ -158,6 +160,30 @@ footer {
 img, table {
     max-width: 100%;
     height: auto;
+}
+
+/* Error styling */
+.error, .warning {
+    border-left: 3px solid var(--error-color);
+    background-color: var(--error-bg);
+    padding: 0.75rem;
+    margin: 1rem 0;
+    border-radius: 4px;
+    color: var(--error-color);
+    font-weight: 500;
+}
+
+.error-message {
+    color: var(--error-color);
+    font-weight: 500;
+}
+
+code.error {
+    background-color: var(--error-bg);
+    color: var(--error-color);
+    padding: 0.2em 0.4em;
+    border-radius: 3px;
+    font-family: monospace;
 }
 
 /* Improve tap targets for mobile */
